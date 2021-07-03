@@ -16,6 +16,6 @@ CPP 05 -> Repetition and Exceptions.
 
 CPP 06 -> C++ Casts.
 
-CPP 07 -> c++ Templates.
+CPP 07 -> C++ Templates.
 
 CPP 08 -> Templated containers, iterators, algorithms.
