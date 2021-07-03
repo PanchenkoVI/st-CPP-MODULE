@@ -1,0 +1,426 @@
+#===============>
+Exercise 00: Polymorphism, or "When the sorcerer thinks you’d becuter as a sheep"
+
+Turn-in directory :ex00/
+Files to turn in : Sorcerer.hpp, Sorcerer.cpp, Victim.hpp, Victim.cpp,Peon.hpp, Peon.cpp, main.cpp
+Forbidden functions : None
+
+Полиморфизм - это античная традиция, восходящая ко временам магов, колдунов и прочих шарлатанов. Мы можем попытаться заставить вас думать, что мы подумали об этом первыми, но это ложь!
+
+Давайте поинтересуемся нашим другом Ro/b/ert, великолепным чародеем по профессии.
+
+У Robert есть интересное времяпрепровождение: превращение всего, что он может достать, в овец, пони, выдр и многих других невероятных вещей (когда-либо видел perifalk...?).
+
+Давайте начнем с создания класса Sorcerer, у которого есть имя и титул. У него есть конструктор, принимающий имя и титул колдуна в качестве параметров (в этом порядке).
+
+Класс не может быть создан без параметров (это не имеет никакого смысла!Представьте себе колдуна без имени или титула... Бедняга, он не мог похвастаться перед девицами в таверне...). Но вы все равно должны использовать форму Coplien’s. Опять же, да, здесь есть какой-то трюк. Мы такие хитрые.
+
+При рождении колдуна вы будете демонстрировать:
+"NAME, TITLE, is born!"
+(Конечно, вы замените имя и титул именем и титулом колдуна, соответственно.)
+
+При его смерти вы будете демонстрировать:
+"NAME, TITLE, is dead. Consequences will never be the same!"
+
+Маг должен уметь представляться таким образом:
+"I am NAME, TITLE, and I like ponies!"
+
+Он может представиться в любом выходном потоке, благодаря перегрузке оператора << to ostream (вы знаете, как это сделать!).
+(Напоминание: использование friend запрещено. Добавьте каждый геттер, который вам нужен!)
+
+Нашему колдуну теперь нужны жертвы, чтобы развлекаться по утрам между медвежьими когтями и соком троллей.
+
+Поэтому вы создадите класс Victim. Немного похожий на волшебника, он будет иметь имя и конструктор, принимающий его имя в качестве параметра.
+
+При рождении жертвы, дисплей:
+"Some random victim called NAME just appeared!"
+
+При его смерти, дисплей:
+"Victim NAME just died for no apparent reason!"
+
+Жертва тоже может представиться, точно так же, как и колдун, и сказать:
+"I'm NAME and I like otters!"
+
+Наша жертва может быть "полиморфизирована" колдуном. Добавьте метод "void getPolymorphed()const" к жертве, который будет говорить:
+"NAME has been turned into a cute little sheep!"
+
+Также добавьте функцию-член "void polymorph(Victim const &) const" к вашему колдуну, чтобы вы могли полиморфизировать людей.
+
+Теперь, чтобы добавить немного разнообразия, наш колдун хотел бы полиморфировать что-то еще,а не только общую жертву. Не проблема, вы просто создадите еще несколько!
+
+Make a Peon class. A Peon is a Victim.  So...
+
+При рождении он скажет: "Zog zog." и при его смерти, "Bleuark.."(Совет: Смотрите пример. Все не так просто...) Peon будет полиморфизирован таким образом:
+"NAME has been turned into a pink pony!"
+
+(Это что-то вроде пониморфа...)
+Следующий код должен быть скомпилирован и отображать следующие выходные данные:
+
+int main()
+{
+	Sorcerer robert("Robert", "the Magnificent");
+	Victim jim("Jimmy");
+	Peon joe("Joe");
+	std::cout << robert << jim << joe;
+	robert.polymorph(jim);
+	robert.polymorph(joe);
+	return 0;
+}
+
+$> clang++ -W -Wall -Werror *.cpp
+$> ./a.out | cat -e
+Robert, the Magnificent, is born!$
+Some random victim called Jimmy just appeared!$
+Some random victim called Joe just appeared!$
+Zog zog.$
+I am Robert, the Magnificent, and I like ponies!$
+I'm Jimmy and I like otters!$
+I'm Joe and I like otters!$
+Jimmy has been turned into a cute little sheep!$
+Joe has been turned into a pink pony!$
+Bleuark...$
+Victim Joe just died for no apparent reason!$
+Victim Jimmy just died for no apparent reason!$
+Robert, the Magnificent, is dead. Consequences will never be the same!$
+$>
+
+Если вы действительно тщательны, вы можете сделать еще несколько тестов: добавить производные классы и т. д...(Нет, на самом деле это не предложение, вы действительно должны это сделать.)
+Конечно, как обычно, вы включите свою функцию, потому что все, что не протестировано, не будет оценено.
+#===============>
+Exercise 01: I don’t want to set the world on fire
+
+Turn-in directory : ex01/
+Files to turn in :AWeapon.[hpp,cpp], PlasmaRifle.[hpp,cpp],PowerFist.[hpp,cpp], Enemy.[hpp,cpp], SuperMutant.[hpp,cpp], RadScorpion.[hpp,cpp], Character.[hpp,cpp], main.cpp
+Forbidden functions :None
+
+В Пустоши можно найти очень много вещей. Кусочки металла, странные химикаты,кресты между ковбоями и бездомными подражателями панков, но также и лодка невероятных(но забавных!) оружие. И это тоже самое время, я хотел бы ударить кое-что в facetoday.
+
+Просто чтобы мы могли выжить во всем этом дерьме, вы собираетесь начать с кодирования нам некоторых видов оружия.Заполните и реализуйте следующий класс (не забудьте "Coplien’s form"...):
+class AWeapon
+{
+	private:
+		[...]
+	public:
+	AWeapon(std::string const & name, int apcost, int damage);
+	[...] ~AWeapon();
+	std::string [...] getName() const;
+	int getAPCost() const;
+	int getDamage() const;
+	[...] void attack() const = 0;
+};
+
+Info:
+• Оружие имеет название, количество очков урона, наносимого при попадании, и стоимость стрельбы в AP (action points).
+
+• Оружие производит определенные звуки и световые эффекты, когда вы "attack()" с его помощью.Это будет отложено до наследующих классов.
+
+После этого можно реализовать конкретные классы "PlasmaRifle" и "PowerFist".Вот их характеристики:
+• PlasmaRifle:
+	◦ Name: "Plasma Rifle"
+	◦ Damage: 21
+	◦ AP cost: 5
+	◦ Output of attack(): "* piouuu piouuu piouuu *"
+•PowerFist:
+	◦ Name: "Power Fist"
+	◦ Damage: 50
+	◦ AP cost: 8
+	◦ Output of attack(): "* pschhh... SBAM! *"
+	
+Ну вот и все. Теперь, когда у нас есть много блестящего оружия, чтобы играть с ним, нам понадобится несколько врагов, чтобы сражаться! (Или разогнать, свалить в кучу, прибить гвоздями к дверям, креогизировать и т. д...)
+Создайте класс "Enemy", используя следующую модель (вам придется завершить ее, очевидно,и снова "Coplien"...):
+
+class Enemy
+{
+	private:
+		[...]
+	public:
+		Enemy(int hp, std::string const & type);
+		[...] ~Enemy();
+		std::string [...] getType() const;
+		int getHP() const;
+		virtual void takeDamage(int);
+};
+
+Constraints:
+	• У противника есть несколько hit points и type.
+	• Враг может получить урон (что уменьшает его HP). Если урон <0, ничего не делайте.
+
+Затем вы будете реализовывать некоторых конкретных врагов. Просто чтобы повеселиться.Во-первых, "SuperMutant". Большой, плохой, уродливый, и с IQ обычно ассоциируется больше с цветочным горшком, чем с живым существом. Тем не менее, это немного похоже на коридор аманкубузины: если вы скучаете по нему, вы действительно делаете это нарочно. Так что это отличный мяч для тренировок.
+Here are its characteristics:
+• HP: 170
+• Type: "Super Mutant"
+• On birth, displays: "Gaaah. Me want smash heads!"
+• Upon death, displays: "Aaargh..."
+• Перегружает "takeDamage", чтобы взять на 3 очка меньше урона, чем обычно (да, они очень сильны, эти ребята.)
+
+Теперь сделай нам RadScorpion. Не такой уж дикий зверь, признаю. Но все же в гигантском Скорпионе есть что-то определенное, верно?
+• Characteristics:
+	◦ HP: 80
+	◦ Type: "RadScorpion"
+	◦ On birth, displays: "* click click click *"
+	◦ Upon death, displays: "* SPROTCH *"
+	
+Теперь, когда у нас есть оружие и враги, чтобы примерить его, нам просто нужно существовать самим.Итак, вы собираетесь создать класс Character со следующей моделью (вы знаете дрель):
+class Character
+{
+	private:
+		[...]
+	public:
+		Character(std::string const & name);
+		[...]
+		~Character();
+		void recoverAP();
+		void equip(AWeapon*);
+		void attack(Enemy*);
+		std::string [...] getName() const;
+};
+
+• Имеет имя, количество точек AP (Action points) и указатель на оружие, представляющее текущее оружие.
+• Обладает 40 AP при создании, теряет AP, соответствующий оружию, которое он имеет при каждом использовании, и восстанавливает 10 AP при каждом вызове "recoverAP ()", до максимума 40. Нет АП, нет атаки.
+• Отображает "NAME attacks ENEMY_TYPE with a WEAPON_NAME" при вызове функции attack(), за которой следует вызов метода attack() текущего оружия. Если нет оснащенного оружия, attack() ничего не делает. Затем вы будете вычитать из HP противника значение урона оружия. После этого, если цель имеет 0 л. с. или меньше, вы должны удалить ее.
+• equip() будет просто хранить указатель на оружие, там нет никакой копии.
+
+Вы также реализуете перегрузку оператора<<to ostream для отображения атрибутов вашего персонажа. Добавьте все необходимые функции геттера.Эта перегрузка будет отображаться:
+"NAME has AP_NUMBER AP and wields a WEAPON_NAME"
+
+если там есть оружие. В противном случае он будет отображаться:
+"NAME has AP_NUMBER AP and is unarmed"
+
+Вот (довольно простая) тестовая основная функция. Твой должен быть лучше.
+int main()
+{
+	Character* me = new Character("me");
+	std::cout << *me;
+	Enemy* b = new RadScorpion();
+	AWeapon* pr = new PlasmaRifle();
+	AWeapon* pf = new PowerFist();
+	me->equip(pr);
+	std::cout << *me;
+	me->equip(pf);
+	me->attack(b);
+	std::cout << *me;
+	me->equip(pr);
+	std::cout << *me;
+	me->attack(b);
+	std::cout << *me;
+	me->attack(b);
+	std::cout << *me;
+	return 0;
+}
+
+Output:
+$> clang++ -W -Wall -Werror *.cpp
+$> ./a.out | cat -e
+me has 40 AP and is unarmed$
+* click click click *$
+me has 40 AP and wields a Plasma Rifle$
+me attacks RadScorpion with a Power Fist$
+* pschhh... SBAM! *$
+me has 32 AP and wields a Power Fist$
+me has 32 AP and wields a Plasma Rifle$
+me attacks RadScorpion with a Plasma Rifle$
+* piouuu piouuu piouuu *$
+me has 27 AP and wields a Plasma Rifle$
+me attacks RadScorpion with a Plasma Rifle$
+* piouuu piouuu piouuu *$
+* SPROTCH *$
+me has 22 AP and wields a Plasma Rifle$
+
+As usual, turn in amainwith your tests.
+#===============>
+Exercise 02: This code is unclean.PURIFY IT!
+
+Turn-in directory: ex02/
+Files to turn in: Squad.hpp, Squad.cpp, TacticalMarine.hpp, TacticalMarine.cpp, AssaultTerminator.hpp, AssaultTerminator.cpp,ISpaceMarine.hpp, ISquad.hpp, main.cpp
+Forbidden functions :None
+
+Ваша миссия состоит в том, чтобы построить армию, достойную доблестных крестоносцев льва. Окрашены в оранжевые и белые полосы. Да, да, правда.
+Вам придется реализовать элементы вашей будущей армии, а именно "Squad" и тактический космодесантник (TacticalMarine).
+Давайте начнем с Squad. Вот интерфейс, который вам нужно будет реализовать (включая ISquad.hpp):
+
+class ISquad
+{
+	public:
+		virtual ~ISquad() {}
+		virtual int getCount() const = 0;
+		virtual ISpaceMarine* getUnit(int) const = 0;
+		virtual int push(ISpaceMarine*) = 0;
+};
+
+Вы будете реализовывать его так, чтобы:
+• getCount() возвращает количество единиц, находящихся в данный момент в отряде
+• getUnit(N) возвращает указатель на N-ю единицу измерения (конечно, мы начинаем с 0. Нулевой указатель в случае индекса out-of-bounds.)
+• push(XXX) добавляет единицу XXX в конец отряда. Возвращает количество единиц в отряде после операции (добавление нулевой единицы или единицы, уже находящейся в отряде, конечно, не имеет никакого смысла...)
+В конце концов, мы просим вас создать простой контейнер космических кораблей, который мы будем использовать, чтобы правильно структурировать вашу армию.При построении копии или назначении отряда копия должна быть глубокой. По назначению, если раньше в отряде было какое-то подразделение, оно должно быть уничтожено, прежде чем быть заменено. Вы можете предположить, что каждый блок будет создан с new.
+Когда отряд уничтожен, подразделения внутри также уничтожаются, по порядку. Для тактической морской пехоты вот интерфейс для реализации (включая ISpaceMarine.hpp):
+class ISpaceMarine
+{
+	public:
+		virtual ~ISpaceMarine() {}
+		virtual ISpaceMarine* clone() const = 0;
+		virtual void battleCry() const = 0;
+		virtual void rangedAttack() const = 0;
+		virtual void meleeAttack() const = 0;
+};
+
+Constraints:
+• clone() возвращает копию текущего объекта
+• При создании отображается: "Tactical Marine ready for battle!"
+• battleCry() выводит: "For the holy PLOT!"
+• rangedAttack() отображает: "* attacks with a bolter *"
+• meleeAttack() отображает: "* attacks with a chainsword *"
+• После смерти выводит: "Aaargh..."
+
+Во многом таким же образом реализуйте AssaultTerminator, со следующими выходами:
+• Birth: "* teleports from space *"
+• battleCry(): "This code is unclean. PURIFY IT!"
+• rangedAttack: "* does nothing *"
+• meleeAttack: "* attacks with chainfists *"
+• Death: "I’ll be back..."
+
+Вот немного тестового кода. Как обычно, ваш должен быть более тщательным
+int main()
+{
+	ISpaceMarine* bob = new TacticalMarine;
+	ISpaceMarine* jim = new AssaultTerminator;
+	ISquad* vlc = new Squad;
+	vlc->push(bob);
+	vlc->push(jim);
+	for (int i = 0; i < vlc->getCount(); ++i)
+	{
+		ISpaceMarine* cur = vlc->getUnit(i);
+		cur->battleCry();cur->rangedAttack();
+		cur->meleeAttack();
+	}
+	delete vlc;
+	return 0;
+}
+
+Output :
+$> clang++ -W -Wall -Werror *.cpp
+$> ./a.out | cat -e
+Tactical Marine ready for battle!$
+* teleports from space *$
+For the holy PLOT!$
+* attacks with a bolter *$
+* attacks with a chainsword *$
+This code is unclean. PURIFY IT!$
+* does nothing *$
+* attacks with chainfists *$
+Aaargh...$
+I'll be back...$
+
+Будьте внимательны, когда вы делаете функцию, которую вы будете сдавать, чтобы получить свой рейтинг...
+#===============>
+Exercise 03: Bocal Fantasy
+
+Turn-in directory :ex03/
+Files to turn in :AMateria.hpp, AMateria.cpp, Ice.hpp, Ice.cpp, Cure.hpp,Cure.cpp, Character.hpp, Character.cpp, MateriaSource.hpp, MateriaSource.cpp, ICharacter.hpp, IMateriaSource.hpp, main.cpp
+Forbidden functions :None
+
+Завершите определение следующего класса AMateria и реализуйте необходимые функции-члены.
+
+class AMateria
+{
+	private:
+		[...]
+		unsigned int _xp;
+	public:
+		AMateria(std::string const & type);
+		[...]
+		[...] ~AMateria();
+		
+		std::string const & getType() const; //Returns the materia type
+		unsigned int getXP() const; //Returns the Materia's XP
+		
+		virtual AMateria* clone() const = 0;
+		virtual void use(ICharacter& target);
+};
+
+Система XP Materia работает следующим образом:
+	Материал имеет общее количество XP, начинающееся с 0 и увеличивающееся на 10 при каждом вызове use(). Найдите умный способ справиться с этим!
+	Создайте конкертный материал Ice и Cure. Их типом будет их имя в нижнем регистре ("ice" для Ice и т. д.).
+	Их метод clone (), конечно же, вернет новый экземпляр типа реальной материи.
+
+Что касается метода use(ICharacter&), то он будет отображаться:
+	• Ice: "* shoots an ice bolt at NAME *"
+	• Cure: "* heals NAME’s wounds *"
+	(Конечно, замените имя на имя символа, заданного в качестве параметра.)
+
+Создайте класс Character, который будет реализовывать следующий интерфейс:
+class ICharacter
+{
+	public:
+		virtual ~ICharacter() {}
+		virtual std::string const & getName() const = 0;
+		virtual void equip(AMateria* m) = 0;
+		virtual void unequip(int idx) = 0;
+		virtual void use(int idx, ICharacter& target) = 0;
+};
+
+Персонаж обладает запасом не более 4 материалов, пустых в начале. Он будет выкладывать материю в слоты от 0 до 3, в таком порядке.
+
+В случае, если мы попытаемся оборудовать материю в полном инвентаре или use/uneqip несуществующую материю, ничего не делайте.
+
+The unequip method must NOT delete Materia!
+
+The use(int, ICharacter&) method will have to use the Materia at the idx slot, and pass target as parameter to the AMateria::use method.
+
+Конечно, вы должны быть в состоянии поддерживать любую AMateria в инвентаре Character.
+
+У вашего персонажа должен быть конструктор, принимающий его имя в качестве параметра. Копирование или назначение персонажа должно быть глубоким, конечно. Старый материал персонажа должен быть удален. То же самое при разрушении характера.
+
+Теперь, когда ваши персонажи могут экипировать и использовать материю, это начинает выглядеть правильно.
+
+Тем не менее, я бы не хотел создавать материалы вручную, и поэтому должен знать их реальный тип... Итак, вам придется создать умный источник материи.
+
+Создайте класс MateriaSource, который должен будет реализовать следующий интерфейс:
+
+class IMateriaSource
+{
+	public:
+		virtual ~IMateriaSource() {}
+		virtual void learnMateria(AMateria*) = 0;
+		virtual AMateria* createMateria(std::string const & type) = 0;
+};
+
+learnMateria должен скопировать материал, переданный в качестве параметра, и сохранить его в памяти для последующего клонирования. Во многом так же, как и для персонажа, источник может знать не более 4 материалов, которые не обязательно уникальны.
+
+createMateria(std::string const &) вернет новый материал, который будет копией материала (ранее изученного источником), тип которого равен параметру. Возвращает 0, если тип неизвестен.
+
+Короче говоря, ваш источник должен уметь изучать "шаблоны" материалов и воссоздавать их по требованию. Тогда вы сможете создать материю,не зная ее "реального" типа, просто строку, идентифицирующую ее. Жизнь хороша, а?
+
+Как обычно, вот главный тест, который вам нужно будет улучшить:
+int main()
+{
+	IMateriaSource* src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+
+	ICharacter* me = new Character("me");
+
+	AMateria* tmp;
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
+
+	ICharacter* bob = new Character("bob");
+
+	me->use(0, *bob);
+	me->use(1, *bob);
+	
+	delete bob;
+	delete me;
+	delete src;
+	
+	return 0;
+}
+
+Output:
+$> clang++ -W -Wall -Werror *.cpp
+$> ./a.out | cat -e
+* shoots an ice bolt at bob *$
+* heals bob's wounds *$
+
+Не забудь включить свою главную функцию, потому что ты... ну, хорошо, теперь ты знаешь правила, не так ли?

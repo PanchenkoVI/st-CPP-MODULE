@@ -1,0 +1,127 @@
+#===============>
+Exercise 00: Aaaaand... OPEN!
+
+Turn-in directory :ex00/
+Files to turn in : FragTrap.cpp FragTrap.hpp main.cpp
+Forbidden functions :None
+
+Здесь вы должны сделать класс, который моделирует "FR4G-TP assault robot/shoebox"
+
+Класс будет называться FragTrap и будет иметь следующие атрибуты, инициализированные указанными значениями:
+• Hit points (100)
+• Max hit points (100)
+• Energy points (100)
+• Max energy points (100)
+• Level (1)
+• Name (Parameter of constructor)
+• Melee attack damage (30)
+• Ranged attack damage (20)
+• Armor damage reduction (5)
+
+Вы также дадите ему несколько функций, чтобы сделать его более похожим на жизнь:
+
+• rangedAttack(std::string const & target)
+• meleeAttack(std::string const & target)
+• takeDamage(unsigned int amount)
+• beRepaired(unsigned int amount)
+
+Во всех этих функциях вы должны отобразить что-то, чтобы описать, что происходит. Например, функция "rangedAttack" может отображать что-то вроде:
+FR4G-TP <name> attacks <target> at range, causing <damage> points of damage!
+
+Конструктор и деструктор также должны что-то отображать, чтобы люди могли видеть, что они были вызваны правильно. Бонусные баллы, если эти сообщения являются забавными ссылками (если вы не знаете, что такое FR4G-TP, по крайней мере, погуглите его и используйте несколько хорошо подобранных цитат ...)
+
+Несколько ограничений:
+• Количество точек попадания никогда не может превышать количество максимальных точек попадания. То же самое касается энергетических точек. Если, например, вы ремонтируете слишком много HP, то вы устанавливаете их на максимальное число HP. Точно так же они не могут упасть ниже 0.
+• Когда вы получаете урон, вы должны учитывать снижение урона вашей брони.
+
+Завершите работу добавлением функции "vaulthunter_dot_exe(std::string const & target)", которая произведет полуслучайную атаку на цель. Сделайте так, чтобы каждый раз, когда он вызывается, он выбирал (предпочтительно) забавную атаку, выбранную случайным образом из пула по крайней мере из 5 возможных атак. Все, что вы хотите использовать для достижения этой цели, прекрасно, но, как обычно, чем элегантнее ваш метод, тем лучше. Эта функция стоит 25 энергетических точек для запуска. Если у вас недостаточно энергетических точек, он ничего не сделает, кроме как напечатает что-то, указывающее, что у него нет энергии.
+
+#===============>
+Exercise 01: Serena, my love!
+
+Turn-in directory : ex01/
+Files to turn in : Same as previous exercise + ScavTrap.cpp ScavTrap.hpp
+Forbidden functions : None
+
+Поскольку у нас никогда не бывает достаточно хлопушек, теперь вы сделаете еще одну, которая служит немного другой цели: охранять дверь вашего скорого злого логова и преследовать людей, которые хотят войти.
+
+Класс будет называться ScavTrap и будет иметь следующие атрибуты:
+
+• Hit points (100)
+• Max hit points (100)
+• Energy points (50)
+• Max energy points (50)
+• Level (1)
+• Name (Parameter of constructor)
+• Melee attack damage (20)
+• Ranged attack damage (15)
+• Armor damage reduction (3)
+
+Добавьте те же функции, что и в FragTrap, но конструктор, деструктор и атаки должны использовать разные выходы. В конце концов, болтовня должна иметь некоторую меру индивидуальности.
+
+Единственным исключением будет то, что ScavTrap не имеет "vaulthunter_dot_exefunction". Вместо этого у него есть "challengeNewcomerfunction", которая заставляет "мусорщика" выбирать вызов наугад из набора различных (и, надеюсь, забавных) задач, которые вам придется придумать, и печатать его на стандартном выходе. Расширьте свою "основную" функцию, чтобы протестировать оба класса.
+
+#===============>
+Exercise 02: Repetitive work
+
+Turn-in directory : ex02/
+Files to turn in : Same as previous exercise + ClapTrap.cpp ClapTrap.hpp
+Forbidden functions : None
+
+Возможно, это начинает действовать вам на нервы, не так ли?
+
+Ну, прежде чем вы сможете работать меньше, вы должны работать больше.
+
+Теперь вы создадите класс "ClapTrap", от которого будут унаследованы как "FragTrap", так и "ScavTrap".
+
+Вы поместите все общие функции в класс "ClapTrap", но конкретные функции должны оставаться там, где они есть. Другими словами, вы должны убедиться, что классы "FragTrap" и "ScavTrap" содержат только то, что не является общим между ними обоими, и поместить все, что они оба разделяют в родительский класс
+
+Класс "ClapTrap" будет иметь свои собственные сообщения о строительстве и разрушении. Кроме того,должна присутствовать правильная цепочка построения/разрушения (когда вы строите "FragTrap", вы должны начать с построения "ClapTrap"... Разрушение происходит в обратном порядке), и тесты должны это показать.
+
+#===============>
+Exercise 03: Now it’s easier!
+
+Turn-in directory :ex03/
+Files to turn in :Same as previous exercise + NinjaTrap.cpp NinjaTrap.hpp
+Forbidden functions :None
+
+Используя все, что вы делали раньше, сделайте "NinjaTrap" со следующими атрибутами:
+• Hit points (60)
+• Max hit points (60)
+• Energy points (120)
+• Max energy points (120)
+• Level (1)
+• Name (Parameter of constructor)
+• Melee attack damage (60)
+• Ranged attack damage (5)
+• Armor damage reduction (0)
+
+Его специальной атакой будет функция "ninjaShoebox". Там будет несколько функций с одной и той же сигнатурой, каждая из которых будет ссылаться на другой "Claptrap" в качестве параметра (включая"NinjaTrap") и иметь другое действие. Очень жаль, что нет способа заставить его принять любую "Claptrap", но все же реагировать определенным образом... Ну ладно, завтра увидишь. Даже я не знаю, что именно он делает, заставляя его делать что-то смешное.
+
+As usual, yourmainwill be extended to test the new class.
+Вы заметили, как легко сделать новую "Claptrap" теперь, когда у вас есть родительский класс для нее?
+
+#===============>
+Exercise 04: Ultimate assault shoebox
+
+Turn-in directory : ex04/
+Files to turn in : Same as previous exercise + SuperTrap.cpp SuperTrap.hpp
+Forbidden functions : None
+
+Теперь вы объедините лучшее из обоих миров, сделав "Claptrap", который наполовину "Fragtrap", наполовину "Ninjatrap".
+Он будет называться "SuperTrap", и она унаследует от "FragTrap" и "NinjaTrap".
+Его атрибуты и функции будут выбраны из любого из его родительских классов:
+• Hit points (Fragtrap)
+• Max hit points (Fragtrap)
+• Energy points (Ninjatrap)
+• Max energy points (Ninjatrap)
+• Level (1)
+• Name (Parameter of constructor)
+• Melee attack damage (Ninjatrap)
+• Ranged attack damage (Fragtrap)
+• Armor damage reduction (Fragtrap)
+• rangedAttack (Fragtrap)
+• meleeAttack (Ninjatrap)
+У него будут особые атаки обоих.
+As usual, your main will be extended to test the new class.
+Конечно, часть Claptrap, состоящая из Supertrap, должна быть создана один раз, и только один раз... Да, тут есть одна хитрость. Посмотреть его.
